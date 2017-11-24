@@ -1,9 +1,7 @@
 $(document).ready(function(){
 
     var toggle = false;
-    $(".cell").on("click", function(){
-        console.log("click");
-        
+    $(".cell").on("click", function(){        
         if(!toggle){
             $(this).html("X");
             $(this).css("color", "rgb(218, 107, 107)");
@@ -13,5 +11,9 @@ $(document).ready(function(){
             $(this).css("color", "rgb(130, 194, 214)");
             toggle = !toggle;
         }
+    });
+
+    $("#one").on("click", function(){
+        $("#overlay").css("display", "none");
     });
 });
