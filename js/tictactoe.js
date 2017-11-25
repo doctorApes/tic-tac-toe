@@ -35,6 +35,7 @@ $(document).ready(function(){
     });
 
     function clearBoard(){
+        firstMove = true;
         for(var i=1; i<4; i++){            
             for(var j=1; j<4; j++){
                 $("#"+i.toString()+"-"+j.toString()).html("");                        
@@ -53,6 +54,7 @@ $(document).ready(function(){
     function aiMove(){
         
         function setMove(x){
+            firstMove = false;
             $("#"+x).html("O");
             $("#"+x).css("color", "rgb(130, 194, 214)");
             aiLastMove = x;
@@ -68,24 +70,21 @@ $(document).ready(function(){
                 $("#3-1").html() === "X"||
                 $("#3-3").html() === "X"){
                     setMove("2-2");
-                    firstMove = false;
                 //If player takes the center take a corner square
                 }else if($("#2-2").html() ==="X"){
-                    
                     var corner = Math.floor((Math.random() * 4) + 1);
                     switch (corner){
-                        case 1: setMove("1-1"); firstMove = false;
+                        case 1: setMove("1-1"); 
                         break;
-                        case 2: setMove("1-3"); firstMove = false;
+                        case 2: setMove("1-3"); 
                         break;
-                        case 3: setMove("3-1"); firstMove = false;
+                        case 3: setMove("3-1"); 
                         break;
-                        case 4: setMove("3-3"); firstMove = false;
+                        case 4: setMove("3-3"); 
                         break;                                                                        
                     }
                 }else{
-                    setMove("2-2");
-                    firstMove = false;
+                    setMove("2-2");                    
                 }
             
         }else{
