@@ -79,7 +79,7 @@ h2{
 .cell:hover{
     cursor: pointer;
     opacity: 0.95;
-    background-color: rgb(114, 114, 114);
+    background-color: rgb(182, 180, 180);
 }
 #footer{
     text-align: center;
