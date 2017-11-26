@@ -1,16 +1,40 @@
 $(document).ready(function(){
-
+    $("#overlay2").css("display", "none");
     var firstMove = true;
     var lastMove = "";
     var aiLastMove = "";
     var mode = "";
     var playerSwitch = false;
-
+    var p1 = "X";    
+    var p2 = "O";
+    
+    var red = "rgb(218, 107, 107)";
+    var blue = "rgb(130, 194, 214)";
+    var p1Color = red;
+    var p2Color = blue;
     //Title screen selection
     $("#one").on("click", function(){
+        $("#overlay2").css("display", "block");
         $("#overlay").css("display", "none");
-        clearBoard();
+        //clearBoard();
         mode="single";
+    });
+
+    $("#O").on("click", function(){
+        p1 = "O";
+        p1Color = blue;
+        p2 = "X";
+        p2Color = red;
+        $("#overlay2").css("display", "none");
+        clearBoard();
+    });
+    $("#X").on("click", function(){
+        p1 = "X";
+        p1Color = red;
+        p2 = "O";
+        p2Color = blue;
+        $("#overlay2").css("display", "none");
+        clearBoard();
     });
 
     $("#two").on("click", function(){
@@ -45,12 +69,12 @@ $(document).ready(function(){
             }else if(mode === "multi"){
                 if(!playerSwitch){
                     $(this).html("X");
-                    $(this).css("color", "rgb(218, 107, 107)");
+                    $(this).css("color", red);
                     checkForWinner("X");
                     playerSwitch = !playerSwitch;
                 }else{
                     $(this).html("O");
-                    $(this).css("color", "rgb(130, 194, 214)");
+                    $(this).css("color", blue);
                     checkForWinner("O");
                     playerSwitch = !playerSwitch;
                 }
@@ -68,10 +92,10 @@ $(document).ready(function(){
     }
 
     function playerMove(x){
-        $("#"+x).html("X");
-        $("#"+x).css("color", "rgb(218, 107, 107)");
+        $("#"+x).html(p1);
+        $("#"+x).css("color", p1Color);
         lastMove = $("#"+x)[0].id;
-        checkForWinner("X");
+        checkForWinner(p1);
         
     }
 
@@ -79,23 +103,23 @@ $(document).ready(function(){
         
         function setMove(x){
             firstMove = false;
-            $("#"+x).html("O");
-            $("#"+x).css("color", "rgb(130, 194, 214)");
+            $("#"+x).html(p2);
+            $("#"+x).css("color", p2Color);
             aiLastMove = x;
-            checkForWinner("O");
+            checkForWinner(p2);
             
         }
 
         if(firstMove){
             
                 //If player takes a corner take the center square
-                if($("#1-1").html() === "X"||
-                $("#1-3").html() === "X"||
-                $("#3-1").html() === "X"||
-                $("#3-3").html() === "X"){
+                if($("#1-1").html() === p1||
+                $("#1-3").html() === p1||
+                $("#3-1").html() === p1||
+                $("#3-3").html() === p1){
                     setMove("2-2");
                 //If player takes the center take a corner square
-                }else if($("#2-2").html() ==="X"){
+                }else if($("#2-2").html() ===p1){
                     var corner = Math.floor((Math.random() * 4) + 1);
                     switch (corner){
                         case 1: setMove("1-1"); 
@@ -193,12 +217,12 @@ $(document).ready(function(){
             }
             //Check for potential good moves
             //debugger;
-            if(!checkRows(aiRow, "O")){
-                if(!checkCols(aiCol, "O")){
-                    if(!checkDiagonals("O")){
-                        if(!checkDiagonals("X")){
-                            if(!checkRows(row, "X")){
-                                if(!checkCols(col, "X")){
+            if(!checkRows(aiRow, p2)){
+                if(!checkCols(aiCol, p2)){
+                    if(!checkDiagonals(p2)){
+                        if(!checkDiagonals(p1)){
+                            if(!checkRows(row, p1)){
+                                if(!checkCols(col, p1)){
                                     randomMove();
                                 }
                             }
@@ -220,18 +244,22 @@ $(document).ready(function(){
         $("#1-1").html() === player && $("#2-2").html() === player && $("#3-3").html() === player ||
         $("#1-3").html() === player && $("#2-2").html() === player && $("#3-1").html() === player){
             $("#overlay").css("display", "block");
-            if(player === "O" && mode === "single"){
-                $("#title").html("YOU LOST");
+            //debugger;
+            if(p1 === "O" && player === "O" && mode === "single"){
+                $("#title").html("YOU WON");
             }else if(player === "O" && mode === "multi"){
                 $("#title").html("NOUGHTS WON");
-            }else if(player === "X" && mode === "single"){
+            }else if(p1 === "X" && player === "X" && mode === "single"){
                 $("#title").html("YOU WON");
             }else if(player === "X" && mode === "multi"){
                 $("#title").html("CROSSES WON");
+            }else{
+                $("#title").html("YOU LOST");
             }
             
             
         }else{
+            //check for draw
             var toggle = false;
             for(var i=1; i<4; i++){    
                 if(toggle){break;}            
