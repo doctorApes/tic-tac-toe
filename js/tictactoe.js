@@ -20,38 +20,40 @@ $(document).ready(function(){
     });
 
     $(".cell").on("click", function(){
-        if(mode === "single"){
-            switch ($(this)[0].id){
-                case "1-1": playerMove("1-1"); aiMove();
-                break;
-                case "1-2": playerMove("1-2"); aiMove();
-                break;
-                case "1-3": playerMove("1-3"); aiMove();
-                break;
-                case "2-1": playerMove("2-1"); aiMove();
-                break;
-                case "2-2": playerMove("2-2"); aiMove();
-                break;
-                case "2-3": playerMove("2-3"); aiMove();
-                break;
-                case "3-1": playerMove("3-1"); aiMove();
-                break;
-                case "3-2": playerMove("3-2"); aiMove();
-                break;
-                case "3-3": playerMove("3-3"); aiMove();
-                break;            
-            }
-        }else if(mode === "multi"){
-            if(!playerSwitch){
-                $(this).html("X");
-                $(this).css("color", "rgb(218, 107, 107)");
-                //checkForWinner("X");
-                playerSwitch = !playerSwitch;
-            }else{
-                $(this).html("O");
-                $(this).css("color", "rgb(130, 194, 214)");
-                //checkForWinner("O");
-                playerSwitch = !playerSwitch;
+        if($(this).html() === ""){
+            if(mode === "single"){
+                switch ($(this)[0].id){
+                    case "1-1": playerMove("1-1"); aiMove();
+                    break;
+                    case "1-2": playerMove("1-2"); aiMove();
+                    break;
+                    case "1-3": playerMove("1-3"); aiMove();
+                    break;
+                    case "2-1": playerMove("2-1"); aiMove();
+                    break;
+                    case "2-2": playerMove("2-2"); aiMove();
+                    break;
+                    case "2-3": playerMove("2-3"); aiMove();
+                    break;
+                    case "3-1": playerMove("3-1"); aiMove();
+                    break;
+                    case "3-2": playerMove("3-2"); aiMove();
+                    break;
+                    case "3-3": playerMove("3-3"); aiMove();
+                    break;            
+                }
+            }else if(mode === "multi"){
+                if(!playerSwitch){
+                    $(this).html("X");
+                    $(this).css("color", "rgb(218, 107, 107)");
+                    checkForWinner("X");
+                    playerSwitch = !playerSwitch;
+                }else{
+                    $(this).html("O");
+                    $(this).css("color", "rgb(130, 194, 214)");
+                    checkForWinner("O");
+                    playerSwitch = !playerSwitch;
+                }
             }
         }
     });
@@ -218,11 +220,17 @@ $(document).ready(function(){
         $("#1-1").html() === player && $("#2-2").html() === player && $("#3-3").html() === player ||
         $("#1-3").html() === player && $("#2-2").html() === player && $("#3-1").html() === player){
             $("#overlay").css("display", "block");
-            if(player === "O"){
+            if(player === "O" && mode === "single"){
                 $("#title").html("YOU LOST");
-            }else{
+            }else if(player === "O" && mode === "multi"){
+                $("#title").html("NOUGHTS WON");
+            }else if(player === "X" && mode === "single"){
                 $("#title").html("YOU WON");
+            }else if(player === "X" && mode === "multi"){
+                $("#title").html("CROSSES WON");
             }
+            
+            
         }else{
             var toggle = false;
             for(var i=1; i<4; i++){    
