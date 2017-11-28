@@ -1,4 +1,4 @@
-# Tic-Tac-Toe Game
+# Tic-Tac-Toe
 by Tom Drapes
 ## FreeCodeCamp Advanced Front End Development Project
 ### Challenge #291
